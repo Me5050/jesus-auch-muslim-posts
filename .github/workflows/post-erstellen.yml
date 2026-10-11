@@ -1,0 +1,67 @@
+name: Post erstellen
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: post-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  post:
+    # Nur Formular-Issues – und nur von Personen mit Schreibrechten (schützt API-Guthaben bei öffentlichen Repos)
+    if: >-
+      contains(github.event.issue.body, '### Design') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NR: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/requirements.txt
+
+      - name: Abhängigkeiten installieren
+        run: |
+          pip install -r tools/requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Post erzeugen (Claude-Prüfung + Rendern)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+          BILD_BASIS: https://github.com/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/posts/${{ github.event.issue.number }}
+          LAUF: ${{ github.run_id }}
+        run: |
+          jq -r '.issue.body' "$GITHUB_EVENT_PATH" > "$RUNNER_TEMP/issue.md"
+          python tools/post.py --issue "$RUNNER_TEMP/issue.md" --nummer "$NR" --ausgabe "posts/$NR"
+
+      - name: Post im Repository speichern
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "posts/$NR"
+          if git diff --cached --quiet; then echo "Keine Änderung"; exit 0; fi
+          git commit -q -m "Post #$NR"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 3; done
+
+      - name: Ergebnis als Kommentar posten
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment "$NR" --body-file "posts/$NR/bericht.md"
+
+      - name: PNG als Download bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: post-${{ github.event.issue.number }}
+          path: posts/${{ github.event.issue.number }}/

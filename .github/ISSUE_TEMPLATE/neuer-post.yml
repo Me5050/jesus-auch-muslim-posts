@@ -1,0 +1,125 @@
+name: Neuer Instagram-Post
+description: Inhalt eintragen und Design wählen – der Post wird automatisch erstellt und hier als Kommentar angezeigt.
+title: "Post: "
+labels: ["post"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Füllen Sie die Felder aus und klicken Sie auf **Create**. Nach etwa 1–2 Minuten erscheint der fertige Post als Kommentar.
+        Zum Ändern das Issue bearbeiten – der Post wird neu erzeugt.
+        Bei *Titel*, *Titel-Akzent*, *Arabischer Schlüsselbegriff* und *Aufruf* können Sie `VORSCHLAG` eintragen; dann schlägt Claude einen Text vor.
+  - type: dropdown
+    id: design
+    attributes:
+      label: Design
+      options:
+        - "D · Licht & Weite"
+        - "E · Muster & Maß"
+        - "F · Quelle & Beleg"
+    validations:
+      required: true
+  - type: dropdown
+    id: hintergrund
+    attributes:
+      label: Hintergrund
+      description: "Automatisch wählt passend zum Quellentyp. D hat 6 Varianten, E und F je 3."
+      options:
+        - Automatisch
+        - Variante 1
+        - Variante 2
+        - Variante 3
+        - Variante 4
+        - Variante 5
+        - Variante 6
+      default: 0
+  - type: dropdown
+    id: quellentyp
+    attributes:
+      label: Quellentyp
+      options:
+        - Koran
+        - Hadith
+        - Vergleich
+    validations:
+      required: true
+  - type: input
+    id: quelle
+    attributes:
+      label: Quelle (Stellenangabe)
+      placeholder: "Koran 19:30  ·  Sahih al-Bukhari 3442"
+    validations:
+      required: true
+  - type: input
+    id: zusatz
+    attributes:
+      label: Surenname oder Einstufung
+      description: "Koran: Surenname (z. B. Maryam). Hadith: Einstufung (z. B. ṣaḥīḥ)."
+      placeholder: "Maryam"
+  - type: dropdown
+    id: texttyp
+    attributes:
+      label: Texttyp
+      options:
+        - sinngemäß
+        - wörtlich
+    validations:
+      required: true
+  - type: input
+    id: uebersetzer
+    attributes:
+      label: Übersetzer (nur bei wörtlicher Übersetzung)
+      placeholder: "Name der Übersetzung"
+  - type: textarea
+    id: text
+    attributes:
+      label: Deutscher Text
+      description: "Übersetzung oder Inhaltsangabe. Ideal bis 160 Zeichen."
+      placeholder: "Jesus sagte: Ich bin der Diener Gottes. Er hat mir die Schrift gegeben und mich zum Propheten gemacht."
+    validations:
+      required: true
+  - type: textarea
+    id: arabischer_text
+    attributes:
+      label: Arabischer Vers (optional)
+      description: "Nur kurze Verse. Wird unverändert übernommen."
+  - type: input
+    id: arabischer_begriff
+    attributes:
+      label: Arabischer Schlüsselbegriff (optional)
+      description: "1–4 Wörter, z. B. عِيسَى – oder VORSCHLAG"
+  - type: input
+    id: titel
+    attributes:
+      label: Titel
+      description: "1–2 Zeilen à ca. 14 Zeichen. Zeilenumbruch mit | – oder VORSCHLAG"
+      placeholder: "Diener | Gottes."
+    validations:
+      required: true
+  - type: input
+    id: titel_akzent
+    attributes:
+      label: Titel-Akzent (optional)
+      description: "Kurze zweite Zeile in Akzentfarbe – oder VORSCHLAG"
+      placeholder: "Seine ersten Worte."
+  - type: input
+    id: kopf_rechts
+    attributes:
+      label: Kopfzeile rechts (optional)
+      placeholder: "Quelle 04"
+  - type: input
+    id: zaehler
+    attributes:
+      label: Zähler (optional)
+      placeholder: "04 / 06"
+  - type: input
+    id: aufruf
+    attributes:
+      label: Aufruf (optional)
+      description: "Leer = Standardtext des Designs"
+  - type: checkboxes
+    id: geprueft
+    attributes:
+      label: Fachliche Prüfung
+      options:
+        - label: Quelle, Übersetzung und arabischer Text wurden fachlich geprüft.

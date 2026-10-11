@@ -1,0 +1,24 @@
+{
+  "name": "Quelle & Beleg",
+  "buchstabe": "F",
+  "aufruf": "Quelle prüfen. Fragen stellen – per Direktnachricht.",
+  "hintergruende": [
+    {
+      "datei": "1_kalkstein.jpg",
+      "layout": "hell"
+    },
+    {
+      "datei": "2_see.jpg",
+      "layout": "dunkel"
+    },
+    {
+      "datei": "3_pergament.jpg",
+      "layout": "hell"
+    }
+  ],
+  "automatisch": {
+    "Koran": 1,
+    "Hadith": 3,
+    "Vergleich": 2
+  }
+}

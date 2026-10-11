@@ -1,0 +1,36 @@
+{
+  "name": "Licht & Weite",
+  "buchstabe": "D",
+  "aufruf": "Mehr zur islamischen Sicht – per Direktnachricht.",
+  "hintergruende": [
+    {
+      "datei": "01_morgenlicht.jpg",
+      "begriff_position": "rechts"
+    },
+    {
+      "datei": "02_sternenhimmel.jpg",
+      "begriff_position": "rechts"
+    },
+    {
+      "datei": "03_daemmerung_mondsichel.jpg",
+      "begriff_position": "links"
+    },
+    {
+      "datei": "04_morgenlicht_links.jpg",
+      "begriff_position": "rechts"
+    },
+    {
+      "datei": "05_blaue_stunde.jpg",
+      "begriff_position": "rechts"
+    },
+    {
+      "datei": "06_goldene_stunde.jpg",
+      "begriff_position": "links"
+    }
+  ],
+  "automatisch": {
+    "Koran": 1,
+    "Hadith": 3,
+    "Vergleich": 5
+  }
+}

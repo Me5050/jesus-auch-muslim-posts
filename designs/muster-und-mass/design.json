@@ -1,0 +1,24 @@
+{
+  "name": "Muster & Maß",
+  "buchstabe": "E",
+  "aufruf": "Fragen zur islamischen Sicht? Schreiben Sie uns.",
+  "hintergruende": [
+    {
+      "datei": "1_fliesen.jpg",
+      "layout": "bogen"
+    },
+    {
+      "datei": "2_gitterfenster.jpg",
+      "layout": "fenster"
+    },
+    {
+      "datei": "3_sternrosette.jpg",
+      "layout": "medaillon"
+    }
+  ],
+  "automatisch": {
+    "Koran": 1,
+    "Hadith": 3,
+    "Vergleich": 2
+  }
+}
